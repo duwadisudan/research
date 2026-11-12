@@ -423,6 +423,7 @@ svg.fig { color: var(--ink); }
       </div>
     </div>
     <div class="prose">
+      <p><strong>Where the clips came from.</strong> The talkers are short clips from AVSpeech, a public dataset of people speaking on video. I wrote a pipeline to screen them automatically. A speech recognition model (Whisper) confirmed the clip was in English. A language model (GPT-4) ran semantic and sentiment analysis on each sentence, keeping those with at least four words that made sense and were not offensive. A face check kept clips with a single talker who stayed in the middle third of the frame. I then verified the shortlist by hand, which left 360 clips.</p>
       <p>The three choices follow the real experiment: one is what your talker said, one is what the other talker said, and one is something neither said. Only trials answered correctly, with the eyes where they were supposed to be, were analyzed, so every trial that reached the decoder is one where the listener was following the cued side.</p>
       <p>There were two versions of the task. In <strong>look and listen</strong>, a crosshair marked the cued screen, each talker appeared as a video on their screen, and listeners turned their eyes to the cued one, as you would in a real conversation. In <strong>listen only</strong>, there was no video, the same audio played, and listeners kept their eyes on a crosshair on the center screen. Each listener did 60 trials of each. The main result depends on the difference between these two versions.</p>
     </div>
