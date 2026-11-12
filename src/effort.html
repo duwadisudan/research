@@ -1,0 +1,191 @@
+<section class="view" data-view="listening-effort" hidden>
+  <div class="hero band">
+    <canvas class="hero-fx" data-scene="waves" aria-hidden="true"></canvas>
+    <div class="wrap stack">
+    <p class="eyebrow">Project 2 &middot; in progress</p>
+    <h1>Listening effort</h1>
+    <p class="lede">Two people can both repeat every word of a sentence heard in noise, one with ease and the other only by straining. A word score rates them the same. This project asks how to measure the difference.</p>
+    <dl class="facts">
+      <div><dt>Where</dt><dd>Sen Lab and Boas Lab, Boston University Neurophotonics Center, with collaborators in BU Speech, Language &amp; Hearing Sciences and at Amazon</dd></div>
+      <div><dt>What we record</dt><dd>Words reported, rated effort, whole-head fNIRS, pupil size</dd></div>
+      <div><dt>Shown at</dt><dd>SANE 2026 (poster); Amazon Edge Tech Summit, Nov 2026 (invited keynote)</dd></div>
+      <div><dt>On this page</dt><dd>The question and how we are set up to answer it. Data collection is under way, so there are no results here.</dd></div>
+    </dl>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>The problem with counting words</h2>
+    <div class="prose">
+      <p>Hearing aids, earbuds, and speech enhancement software are tuned and scored on <strong>intelligibility</strong>: how many words a listener gets right. That number leaves out something everyone knows from a loud restaurant. You can catch every word across the table and still go home worn out.</p>
+      <p>What is missing is called <strong>listening effort</strong>: the mental resources a person spends to understand what they hear <a href="#listening-effort" data-ref="le1">[1]</a>. Two listeners, or two devices, can reach the same word score at very different cost. A device that is scored only on words gets no credit for making listening easier and no penalty for making it harder.</p>
+    </div>
+    <p class="plain"><b>In plain words</b>Getting the words right shows that someone understood, but not how hard it was.</p>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>The scene</h2>
+    <div class="prose">
+      <p>This is what a listener in the study hears: one talker straight ahead and two competing talkers, one on each side, all speaking at once. The task is to follow the one ahead. Difficulty is set by how loud that talker is compared with the other two, at three levels. Pick one.</p>
+    </div>
+    <div class="stage" id="le-scene">
+      <div class="stage-head"><span class="tag">Your turn</span><span class="stage-note">The listening scene, seen from above</span></div>
+      <div class="split">
+        <figure>
+          <svg class="fig" viewBox="0 0 420 300" role="img" aria-label="Top view of the listening scene: the target talker straight ahead, one competing talker 30 degrees to each side.">
+            <g stroke="var(--rule)" stroke-width="2" stroke-dasharray="6 6" fill="none">
+              <line x1="210" y1="232" x2="210" y2="118"/><line x1="210" y1="232" x2="120" y2="140"/><line x1="210" y1="232" x2="300" y2="140"/>
+            </g>
+            <g id="le-rings"></g>
+            <g id="le-masker-l" fill="var(--masker)"><circle cx="112" cy="92" r="20"/><rect x="84" y="116" width="56" height="40" rx="12"/></g>
+            <g id="le-masker-r" fill="var(--masker)"><circle cx="308" cy="92" r="20"/><rect x="280" y="116" width="56" height="40" rx="12"/></g>
+            <g id="le-target" fill="var(--target)"><circle cx="210" cy="62" r="22"/><rect x="180" y="88" width="60" height="42" rx="12"/></g>
+            <g><rect x="176" y="246" width="8" height="20" rx="2" fill="var(--skin)" stroke="var(--ink)" stroke-width="2"/><rect x="236" y="246" width="8" height="20" rx="2" fill="var(--skin)" stroke="var(--ink)" stroke-width="2"/>
+              <path d="M203 232 L210 222 L217 232 Z" fill="var(--skin)" stroke="var(--ink)" stroke-width="2"/><circle cx="210" cy="256" r="28" fill="var(--skin)" stroke="var(--ink)" stroke-width="2"/></g>
+            <text x="210" y="24" text-anchor="middle" font-size="15" font-weight="600">Target, 0&deg;</text>
+            <text x="50" y="96" text-anchor="end" font-size="14" style="fill:var(--muted)">Masker</text><text x="50" y="114" text-anchor="end" font-size="14" style="fill:var(--muted)">&minus;30&deg;</text>
+            <text x="370" y="96" font-size="14" style="fill:var(--muted)">Masker</text><text x="370" y="114" font-size="14" style="fill:var(--muted)">+30&deg;</text>
+            <text x="268" y="262" font-size="14" style="fill:var(--muted)">You</text>
+          </svg>
+        </figure>
+        <div class="stack">
+          <div class="controls" role="group" aria-label="Level">
+            <button class="btn" id="le-play-alone" data-tmr="alone">Target alone</button>
+            <button class="btn" id="le-play-p5" data-tmr="5">+5 dB</button>
+            <button class="btn" id="le-play-0" data-tmr="0" aria-pressed="true">0 dB</button>
+            <button class="btn" id="le-play-m5" data-tmr="-5">&minus;5 dB</button>
+          </div>
+          <svg class="fig" viewBox="0 0 300 150" role="img" aria-label="Level of the target talker compared with each masker for the selected condition.">
+            <line x1="20" y1="120" x2="280" y2="120" stroke="var(--rule)" stroke-width="1.5"/>
+            <rect id="le-bar-l" x="60" y="60" width="44" height="60" fill="var(--masker)"/>
+            <rect id="le-bar-t" x="128" y="60" width="44" height="60" fill="var(--target)"/>
+            <rect id="le-bar-r" x="196" y="60" width="44" height="60" fill="var(--masker)"/>
+            <text x="82" y="138" text-anchor="middle" font-size="12" style="fill:var(--muted)">masker</text>
+            <text x="150" y="138" text-anchor="middle" font-size="12">target</text>
+            <text x="218" y="138" text-anchor="middle" font-size="12" style="fill:var(--muted)">masker</text>
+          </svg>
+          <p class="readout" id="le-scene-readout" aria-live="polite">Showing 0 dB. Across the three levels the maskers stay fixed and only the level of the target changes.</p>
+        </div>
+      </div>
+      <p class="stage-note">The numbers are target-to-masker ratios. At 0 dB the talker you follow is set to the same level as each talker you ignore. At &minus;5 dB the target is quieter than they are.</p>
+    </div>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>Try a trial, by eye</h2>
+    <div class="prose">
+      <p>In the experiment every trial runs the same way: a sentence is heard once, then the listener reports the five words the front talker said and rates how much effort it took. The recordings are not mine to post, so here is the same task for the eyes. Three sentences flash by one word at a time, stacked on top of each other, the way three voices overlap in time. Follow the middle one. You get one pass, as a listener does.</p>
+    </div>
+    <div class="stage" id="le-trial">
+      <div class="stage-head"><span class="tag">Your turn</span><span class="stage-note" id="le-trial-step">Step 1 of 3: choose a difficulty and watch</span></div>
+      <div class="controls" role="group" aria-label="Difficulty">
+        <button class="btn" data-trial="p5">Show a +5 dB trial</button>
+        <button class="btn" data-trial="z0">Show a 0 dB trial</button>
+        <button class="btn" data-trial="m5">Show a &minus;5 dB trial</button>
+      </div>
+      <div class="rsvp" id="le-rsvp" aria-hidden="true"><span class="m ml"></span><span class="t"></span><span class="m mr"></span><span class="fix">+</span></div>
+      <p class="stage-note">A visual analogy, not the experiment. The middle sentence is brighter or fainter than the other two, using the study's three level ratios, and the sentences are drawn at random from the study's word lists.</p>
+      <div class="split" id="le-response" hidden>
+        <div class="stack">
+          <p><strong>Select one word from each column</strong></p>
+          <div class="matrix" id="le-matrix"></div>
+        </div>
+        <div class="stack">
+          <p><strong>How much effort did you need to follow the middle sentence?</strong></p>
+          <div class="scale" id="le-scale"></div>
+          <div class="controls"><button class="btn primary" id="le-submit" disabled>Submit</button></div>
+        </div>
+      </div>
+      <div class="scroll-x" id="le-log-wrap" hidden>
+        <table id="le-log" style="border-collapse:collapse;font-size:0.95rem">
+          <thead><tr><th style="text-align:left;padding:0.3rem 0.7rem 0.3rem 0;border-bottom:1px solid var(--rule)">Difficulty</th><th style="text-align:left;padding:0.3rem 0.7rem;border-bottom:1px solid var(--rule)">Words you got</th><th style="text-align:left;padding:0.3rem 0.7rem;border-bottom:1px solid var(--rule)">Effort you rated</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="readout" id="le-trial-readout" aria-live="polite" hidden></p>
+      <div class="controls"><button class="btn quiet" id="le-again" hidden>Try another difficulty</button></div>
+    </div>
+    <div class="prose">
+      <p>The sentences come from a matrix test: always a name, a verb, a number, an adjective, and an object, with ten choices for each. Every sentence is equally predictable, so nobody can fill in a missed word from context, and scoring is a count out of five. The rating uses a 13-step listening effort scale from the hearing research literature <a href="#listening-effort" data-ref="le2">[2]</a>, with a fourteenth option for when all you heard was noise.</p>
+    </div>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>How we are thinking about it</h2>
+    <div class="prose">
+      <p>We take three measures from the same few seconds of listening, and each captures something the others miss.</p>
+    </div>
+    <div class="cols-3">
+      <div><h3>What you got</h3><p>Words correct out of five. Objective and simple, and the number the field already uses. It measures the outcome and says nothing about the cost.</p></div>
+      <div><h3>What it felt like</h3><p>The effort rating. It is the listener's own account of the cost, but it interrupts the listening to ask, and people use scales differently.</p></div>
+      <div><h3>What your body did</h3><p>The pupil widens when the brain works harder <a href="#listening-effort" data-ref="le3">[3]</a>, and degraded speech draws on brain areas beyond the ones that process sound <a href="#listening-effort" data-ref="le4">[4]</a>. Neither needs the listener to say anything.</p></div>
+    </div>
+    <figure>
+      <div class="scroll-x">
+      <svg class="fig" viewBox="0 0 720 250" style="min-width:560px" role="img" aria-label="One trial read three ways: words reported after the sentence, an effort rating after the words, and physiology recorded continuously through the whole trial.">
+        <defs><marker id="le-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        <text x="8" y="36" font-size="13" style="fill:var(--muted)">One trial</text>
+        <rect x="150" y="16" width="180" height="32" rx="4" fill="var(--target)"/><text x="240" y="37" text-anchor="middle" font-size="13" style="fill:var(--bg)">sentence in noise</text>
+        <rect x="390" y="16" width="170" height="32" rx="4" fill="var(--act)"/><text x="475" y="37" text-anchor="middle" font-size="13" style="fill:var(--act-ink)">report the words</text>
+        <rect x="566" y="16" width="120" height="32" rx="4" fill="var(--act)" opacity="0.55"/><text x="626" y="37" text-anchor="middle" font-size="13">rate effort</text>
+        <line x1="150" y1="64" x2="700" y2="64" stroke="currentColor" stroke-width="1.2" marker-end="url(#le-arr)"/><text x="700" y="82" text-anchor="end" font-size="12" style="fill:var(--muted)">time</text>
+        <text x="8" y="118" font-size="13" font-weight="600">Words</text><text x="8" y="134" font-size="12" style="fill:var(--muted)">one number,</text><text x="8" y="149" font-size="12" style="fill:var(--muted)">after the fact</text>
+        <circle cx="475" cy="124" r="7" fill="var(--act)"/>
+        <text x="8" y="178" font-size="13" font-weight="600">Rating</text><text x="8" y="194" font-size="12" style="fill:var(--muted)">one number,</text><text x="8" y="209" font-size="12" style="fill:var(--muted)">after the fact</text>
+        <circle cx="626" cy="184" r="7" fill="var(--act)" opacity="0.55"/>
+        <text x="8" y="232" font-size="13" font-weight="600">Pupil and brain</text>
+        <line x1="150" y1="228" x2="690" y2="228" stroke="var(--mid)" stroke-width="5" stroke-linecap="round"/>
+        <text x="420" y="246" text-anchor="middle" font-size="12" style="fill:var(--muted)">recorded continuously, including while the sentence is playing</text>
+        <g stroke="var(--rule)" stroke-width="1"><line x1="150" y1="100" x2="690" y2="100"/><line x1="150" y1="160" x2="690" y2="160"/><line x1="150" y1="214" x2="690" y2="214"/></g>
+      </svg>
+      </div>
+      <figcaption>A schematic of when each measure exists, not data. The words and the rating arrive once, after the listening is over. Physiology covers the listening itself.</figcaption>
+    </figure>
+    <div class="prose">
+      <p>That is why the goal is a <strong>physiological read-out of listening effort</strong>: a signal that could be used to evaluate, and eventually steer, audio processing without stopping the listener to ask. The behavioral measures are there to anchor it. If a body signal is going to stand in for effort, it has to be checked against what listeners got and what they said it cost.</p>
+    </div>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>How the experiment is built</h2>
+    <div class="prose">
+      <p><strong>The scene.</strong> The three talkers are placed in virtual space over insert earphones, using filters measured on an acoustic manikin's ears so that each voice arrives the way it would from that direction. Difficulty is set by one knob, the level of the target against the maskers: &minus;5, 0, or +5 dB.</p>
+      <p><strong>Three kinds of trial.</strong> Reporting words and clicking a rating move the eyes and the hands, and that activity would be mixed into any body signal recorded at the same time. So the trials come in three kinds, interleaved and unannounced. Pick one to see what it is for.</p>
+    </div>
+    <div class="stage" id="le-timeline">
+      <div class="stage-head"><span class="tag">Your turn</span>
+        <div class="controls" role="group" aria-label="Trial type">
+          <button class="btn" data-tt="respond" aria-pressed="true">Listen and respond</button>
+          <button class="btn" data-tt="listen" aria-pressed="false">Listen only</button>
+          <button class="btn" data-tt="motor" aria-pressed="false">Motor clicks</button>
+        </div>
+      </div>
+      <figure>
+        <div class="scroll-x">
+        <svg class="fig" viewBox="0 0 720 150" style="min-width:560px" role="img" aria-label="Timeline of the selected trial type.">
+          <defs>
+            <pattern id="le-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="var(--sunk)"/><line x1="0" y1="0" x2="0" y2="8" stroke="var(--mid)" stroke-width="2"/></pattern>
+          </defs>
+          <g id="le-tl-blocks"></g>
+          <line x1="10" y1="108" x2="710" y2="108" stroke="currentColor" stroke-width="1.2"/>
+          <g id="le-tl-ticks" font-size="12"></g>
+        </svg>
+        </div>
+        <figcaption id="le-tl-caption"></figcaption>
+      </figure>
+      <div class="timeline-key">
+        <span class="chip"><i style="background:repeating-linear-gradient(45deg, var(--sunk) 0 3px, var(--mid) 3px 5px)"></i>Hatched blocks have random length, so slow body signals from one event can be separated from the next</span>
+      </div>
+    </div>
+    <div class="prose">
+      <p><strong>The recording.</strong> Listeners wear a whole-head fNIRS cap with 56 light sources and 144 detectors, which tracks blood oxygen changes across the surface of the brain using near-infrared light (the <a href="#cocktail-party">cocktail party page</a> explains how that works). Eye-tracking glasses measure pupil size at the same time. The screen stays a constant dim gray throughout, because a pupil also reacts to brightness, and that reaction would swamp the one we are after. A hardware trigger marks every trial in the fNIRS recording, and software markers put the eye tracker on the same clock, so brain, pupil, and sound line up.</p>
+      <p><strong>Where it fits.</strong> The first project of my thesis decoded <em>which side</em> a listener was attending to. This one asks <em>how hard</em> they are working to listen, in the same kind of multi-talker scene and with the same whole-head system.</p>
+    </div>
+    <p class="notice">Supported by the National Science Foundation (award 2319321) and Amazon gift funding.</p>
+    <ol class="refs">
+      <li id="le1">[1] Pichora-Fuller MK et al. (2016). Hearing impairment and cognitive energy: the Framework for Understanding Effortful Listening (FUEL). Ear and Hearing 37, 5S-27S.</li>
+      <li id="le2">[2] Krueger M et al. (2017). Development of an adaptive scaling method for subjective listening effort. J Acoust Soc Am 141, 4680.</li>
+      <li id="le3">[3] Zekveld AA, Koelewijn T, Kramer SE (2018). The pupil dilation response to auditory stimuli: current state of knowledge. Trends in Hearing 22.</li>
+      <li id="le4">[4] Peelle JE (2018). Listening effort: how the cognitive consequences of acoustic challenge are reflected in brain and behavior. Ear and Hearing 39, 204-214.</li>
+    </ol>
+  </div></div>
+</section>

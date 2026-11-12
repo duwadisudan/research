@@ -1,0 +1,324 @@
+<section class="view" data-view="cocktail-party" hidden>
+  <div class="hero band">
+    <canvas class="hero-fx" data-scene="party" data-talkers="1" aria-hidden="true"></canvas>
+    <div class="wrap stack">
+    <p class="eyebrow">Project 1 &middot; published in NeuroImage, 2026</p>
+    <h1>Decoding where you look and listen at a party</h1>
+    <p class="lede">In a crowded room you follow one voice and ignore the rest. I asked whether a cap that shines near-infrared light through the scalp can tell, from a single trial a few seconds long, which side a listener is attending to, and which part of the brain carries that information.</p>
+    <dl class="facts">
+      <div><dt>Paper</dt><dd><a href="https://doi.org/10.1016/j.neuroimage.2026.122292">Duwadi et al., NeuroImage 342, 122292</a>. Open access. I am first author.</dd></div>
+      <div><dt>Open data</dt><dd><a href="https://openneuro.org/datasets/ds007738">OpenNeuro ds007738</a></dd></div>
+      <div><dt>Open code</dt><dd><a href="https://github.com/duwadisudan/wholehead-cocktail-party-fnirs">github.com/duwadisudan/<wbr>wholehead-cocktail-party-fnirs</a></dd></div>
+      <div><dt>Where</dt><dd>Sen Lab and Boas Lab, Boston University Neurophotonics Center</dd></div>
+    </dl>
+    <div class="steps" id="cp-steps" aria-label="Jump to a step">
+      <button data-go="cp-1">1 The problem</button><button data-go="cp-2">2 The experiment</button><button data-go="cp-3">3 The sounds</button>
+      <button data-go="cp-4">4 Light through the head</button><button data-go="cp-5">5 Light to signal</button><button data-go="cp-6">6 The decoder</button>
+      <button data-go="cp-7">7 What it found</button><button data-go="cp-8">8 A smaller cap</button>
+    </div>
+  </div></div>
+
+  <!-- 1 -->
+  <div class="chapter band" id="cp-1"><div class="wrap">
+    <p class="step">Step 1</p>
+    <h2>The problem: one voice among many</h2>
+    <div class="prose">
+      <p>Following one talker while others talk over them is called the <strong>cocktail party problem</strong>. Most people do it without noticing. For people with hearing loss it is one of the hardest things about daily life, and hearing aids do not solve it: they cannot know which voice you want, so competing voices get amplified along with it.</p>
+      <p>A device could do better if it knew which direction its wearer was attending to. Then it could favor sound from that direction. The listener's brain already holds that information. Can it be read from outside the head, quickly, from one short stretch of listening, with something a person could wear?</p>
+      <p>I used <strong>fNIRS</strong> (functional near-infrared spectroscopy), a brain imaging method that is portable, silent, and needs nothing more invasive than a cap. Most earlier attempts used EEG, which measures electrical activity and is fast but hard to pin to a location in the brain. fNIRS is slower and shows more clearly <em>where</em> a signal comes from, which matters if the goal is to shrink the device to only the part that is needed.</p>
+    </div>
+    <p class="plain"><b>In plain words</b>Can a cap tell which way your attention is pointing, and can most of the cap then be thrown away?</p>
+  </div></div>
+
+  <!-- 2 -->
+  <div class="chapter band" id="cp-2"><div class="wrap">
+    <p class="step">Step 2</p>
+    <h2>The experiment</h2>
+    <div class="prose">
+      <p>A listener sits with their chin on a rest, facing three screens, wearing insert earphones, eye-tracking glasses, and the fNIRS cap. Every trial runs the same way. A two-second burst of noise comes from the left or the right: that is the cue. Then two people talk at once for three seconds, one from 30&deg; to the left and one from 30&deg; to the right. The listener follows the one on the cued side and afterwards picks what that talker said from three choices. Answering and resting take 10 to 12 seconds, and then the next trial begins.</p>
+      <p>Try one. The talkers here are synthesized voices that hum a pattern instead of speaking, because the real clips are videos of other people that are not mine to repost. Everything else is the real thing: the cue, the 30&deg; positions, and the ear filters that put the voices there.</p>
+    </div>
+    <div class="stage" id="cp-game">
+      <div class="stage-head"><span class="tag">Your turn &middot; headphones on</span><span class="stage-note" id="cp-game-score">Trials answered: 0</span></div>
+      <figure>
+        <svg class="fig" viewBox="0 0 640 230" role="img" aria-label="Three screens. The left and right screens each show a talker; the center screen shows a crosshair.">
+          <rect x="0" y="0" width="640" height="230" rx="10" fill="#10151D"/>
+          <g id="cp-scr-l"><path d="M40 40 L230 56 L230 186 L40 204 Z" fill="#232B38" stroke="#3A4558" stroke-width="2"/><circle cx="135" cy="104" r="20" fill="#8A94A6"/><rect x="107" y="128" width="56" height="34" rx="12" fill="#8A94A6"/></g>
+          <g id="cp-scr-c"><rect x="246" y="56" width="148" height="130" fill="#1A212C" stroke="#3A4558" stroke-width="2"/></g>
+          <g id="cp-scr-r"><path d="M410 56 L600 40 L600 204 L410 186 Z" fill="#232B38" stroke="#3A4558" stroke-width="2"/><circle cx="505" cy="104" r="20" fill="#8A94A6"/><rect x="477" y="128" width="56" height="34" rx="12" fill="#8A94A6"/></g>
+          <g id="cp-cross" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"><line x1="310" y1="121" x2="330" y2="121"/><line x1="320" y1="111" x2="320" y2="131"/></g>
+          <text x="135" y="222" text-anchor="middle" font-size="13" style="fill:#AEB8C8">&minus;30&deg;</text><text x="505" y="222" text-anchor="middle" font-size="13" style="fill:#AEB8C8">+30&deg;</text>
+        </svg>
+      </figure>
+      <div class="controls"><button class="btn primary" id="cp-game-start">Start a trial</button></div>
+      <p class="readout" id="cp-game-status" aria-live="polite">You will hear a noise burst from one side, then two voices at once. Follow the voice on the side the noise came from.</p>
+      <div id="cp-game-q" hidden class="stack">
+        <p><strong>Which pattern did the voice on your side hum?</strong></p>
+        <div class="options" id="cp-game-opts"></div>
+      </div>
+    </div>
+    <div class="prose">
+      <p>The three choices follow the real experiment: one is what your talker said, one is what the other talker said, and one is something neither said. Only trials answered correctly, with the eyes where they were supposed to be, were analyzed, so every trial that reached the decoder is one where the listener was following the cued side.</p>
+      <p>There were two versions of the task. In <strong>look and listen</strong>, a crosshair marked the cued screen, each talker appeared as a video on their screen, and listeners turned their eyes to the cued one, as you would in a real conversation. In <strong>listen only</strong>, there was no video, the same audio played, and listeners kept their eyes on a crosshair on the center screen. Each listener did 60 trials of each. The main result depends on the difference between these two versions.</p>
+    </div>
+    <figure>
+      <div class="scroll-x">
+      <svg class="fig" viewBox="0 0 720 120" style="min-width:560px" role="img" aria-label="Trial timeline: 2 second cue, 3 seconds of two talkers, then 10 to 12 seconds to answer and rest before the next cue.">
+        <rect x="20" y="20" width="80" height="44" rx="3" fill="var(--cue)" opacity="0.3"/><text x="60" y="47" text-anchor="middle" font-size="14">Cue</text>
+        <rect x="100" y="20" width="120" height="44" rx="3" fill="var(--movie)" opacity="0.3"/><text x="160" y="47" text-anchor="middle" font-size="14">Two talkers</text>
+        <rect x="220" y="20" width="440" height="44" rx="3" fill="var(--sunk)"/><text x="440" y="47" text-anchor="middle" font-size="14">Answer, then rest (10 to 12 s, varied)</text>
+        <rect x="660" y="20" width="50" height="44" rx="3" fill="var(--cue)" opacity="0.3"/><text x="685" y="47" text-anchor="middle" font-size="12">Cue</text>
+        <line x1="20" y1="80" x2="710" y2="80" stroke="currentColor" stroke-width="1.2"/>
+        <g font-size="12"><line x1="20" y1="74" x2="20" y2="86" stroke="currentColor"/><text x="20" y="104" text-anchor="middle" style="fill:var(--muted)">0 s</text>
+        <line x1="100" y1="74" x2="100" y2="86" stroke="currentColor"/><text x="100" y="104" text-anchor="middle" style="fill:var(--muted)">2</text>
+        <line x1="220" y1="74" x2="220" y2="86" stroke="currentColor"/><text x="220" y="104" text-anchor="middle" style="fill:var(--muted)">5</text>
+        <line x1="660" y1="74" x2="660" y2="86" stroke="currentColor"/><text x="660" y="104" text-anchor="middle" style="fill:var(--muted)">15 to 17</text></g>
+      </svg>
+      </div>
+      <figcaption>One trial. The long rest is there because the brain signal fNIRS measures is slow: it peaks seconds after the event and takes several more to settle. The rest length varies so that listeners cannot predict the next cue.</figcaption>
+    </figure>
+  </div></div>
+
+  <!-- 3 -->
+  <div class="chapter band" id="cp-3"><div class="wrap">
+    <p class="step">Step 3</p>
+    <h2>The sounds: placing a voice in space with two earphones</h2>
+    <div class="prose">
+      <p>Earphones sit inside the ear canals, so how can a voice seem to come from 30&deg; to the left? Because your brain locates sound from the differences between what your two ears receive. A voice on your left reaches the left ear a fraction of a millisecond earlier, and reaches the right ear quieter and duller, because your head is in the way.</p>
+      <p>Those differences can be measured once, with microphones in the ears of an acoustic manikin, and stored as a pair of filters for each direction. Passing any sound through the pair for &minus;30&deg; makes it arrive at your ears the way a real source at &minus;30&deg; would. Drag the source around and listen. These are the filters used to build the experiment's stimuli.</p>
+    </div>
+    <div class="stage" id="cp-hrtf">
+      <div class="stage-head"><span class="tag">Your turn &middot; headphones on</span><span class="stage-note">Manikin ear filters (KEMAR, CIPIC database), horizontal plane</span></div>
+      <div class="split">
+        <div class="stack">
+          <svg class="fig" viewBox="0 0 300 190" role="img" aria-label="Top view of a head with a sound source on a half circle in front of it.">
+            <path d="M40 160 A110 110 0 0 1 260 160" fill="none" stroke="var(--rule)" stroke-width="2" stroke-dasharray="5 6"/>
+            <g><rect x="118" y="150" width="8" height="20" rx="2" fill="var(--skin)" stroke="var(--ink)" stroke-width="2"/><rect x="174" y="150" width="8" height="20" rx="2" fill="var(--skin)" stroke="var(--ink)" stroke-width="2"/>
+              <path d="M143 136 L150 126 L157 136 Z" fill="var(--skin)" stroke="var(--ink)" stroke-width="2"/><circle cx="150" cy="160" r="26" fill="var(--skin)" stroke="var(--ink)" stroke-width="2"/></g>
+            <line id="cp-hrtf-ray" x1="150" y1="160" x2="150" y2="50" stroke="var(--act)" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <circle id="cp-hrtf-src" cx="150" cy="50" r="11" fill="var(--act)"/>
+            <text x="34" y="182" text-anchor="middle" font-size="12" style="fill:var(--muted)">&minus;90&deg;</text><text x="266" y="182" text-anchor="middle" font-size="12" style="fill:var(--muted)">+90&deg;</text>
+          </svg>
+          <label class="field" for="cp-hrtf-az">Direction of the source: <output id="cp-hrtf-azout">0&deg;</output>
+            <input type="range" id="cp-hrtf-az" min="-90" max="90" step="10" value="-30"></label>
+          <div class="controls"><button class="btn primary" id="cp-hrtf-play">Play a sound from there</button></div>
+        </div>
+        <figure>
+          <canvas id="cp-hrtf-canvas" role="img" aria-label="The left-ear and right-ear filters for the selected direction, plotted over about three milliseconds."></canvas>
+          <div class="legend"><span class="chip"><i style="background:var(--whole)"></i>left ear</span><span class="chip"><i style="background:var(--attR)"></i>right ear</span></div>
+          <p class="readout num" id="cp-hrtf-out" aria-live="polite"></p>
+        </figure>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 4 -->
+  <div class="chapter band" id="cp-4"><div class="wrap">
+    <p class="step">Step 4</p>
+    <h2>Measuring the brain with light</h2>
+    <div class="prose">
+      <p>Hold a flashlight behind your fingers and they glow red. Skin and bone let red and near-infrared light through, and what stops that light is mostly blood. fNIRS is built on those two facts. A small light source sits on the scalp. A detector sits a few centimeters away. Light entering the head does not travel straight: it scatters off tissue like headlights in fog, and a tiny fraction wanders down, through the skull, and back up to the detector.</p>
+      <p>The light that makes that trip has sampled a banana-shaped region between source and detector. Slide the detector away from the source and watch what happens to the banana, and to how much light reaches the detector.</p>
+    </div>
+    <div class="stage" id="cp-photon">
+      <div class="stage-head"><span class="tag">Your turn</span><span class="stage-note">A simplified 2D simulation. It shows the trend, not exact tissue values.</span></div>
+      <figure>
+        <canvas id="cp-photon-canvas" role="img" aria-label="Cross-section of the head with scalp, skull, fluid, and brain layers. Paths of light that reach the detector form an arc that goes deeper as the detector moves farther from the source."></canvas>
+      </figure>
+      <div class="split">
+        <label class="field" for="cp-photon-d">Distance from source to detector: <output id="cp-photon-dout">30 mm</output>
+          <input type="range" id="cp-photon-d" min="8" max="44" step="2" value="30"></label>
+        <p class="readout num" id="cp-photon-out" aria-live="polite"></p>
+      </div>
+      <p class="stage-note">Close pairs see only the scalp. Far pairs reach the brain but collect very little light. The cap uses both on purpose: the close ones measure blood flow in the scalp so it can be subtracted from the far ones.</p>
+    </div>
+    <div class="prose">
+      <p><strong>Two colors for two kinds of blood.</strong> Active brain cells need oxygen, and within a few seconds the local blood supply over-delivers: oxygen-rich hemoglobin (HbO) goes up and oxygen-poor hemoglobin (HbR) goes down. The two absorb light differently. At 760 nm, HbR absorbs roughly two and a half times as strongly as HbO. At 850 nm it is HbO that absorbs more. Measuring at both colors gives two readings for two unknowns, so both can be solved for.</p>
+      <p>Hold the button to make this patch of brain work, and watch the blood respond. It is slow, and both the experiment and the decoder had to be designed around that delay.</p>
+    </div>
+    <div class="stage" id="cp-hrf">
+      <div class="stage-head"><span class="tag">Your turn</span><span class="stage-note">A textbook model of the blood response, not data</span></div>
+      <figure><canvas id="cp-hrf-canvas" role="img" aria-label="A scrolling chart: brain activity as a block, oxygenated blood rising and deoxygenated blood falling a few seconds later."></canvas>
+        <div class="legend"><span class="chip"><i style="background:var(--muted)"></i>brain cells active</span><span class="chip"><i style="background:var(--hbo)"></i>HbO, oxygen-rich</span><span class="chip"><i style="background:var(--hbr)"></i>HbR, oxygen-poor</span></div></figure>
+      <div class="split">
+        <div class="controls"><button class="btn primary" id="cp-hrf-btn">Hold to activate</button><button class="btn quiet" id="cp-hrf-burst">Run a 3 s burst</button></div>
+        <p class="readout num" id="cp-hrf-out" aria-live="polite">Light reaching the detector, compared with rest:<br>850 nm: 0.0%<br>760 nm: 0.0%</p>
+      </div>
+    </div>
+    <div class="prose">
+      <p><strong>The cap.</strong> One source and one detector see one small patch. To see the whole head, the cap carries 56 sources and 144 detectors, and every source-detector pair close enough to exchange light counts as a measurement channel: 567 of them, each read at both colors about nine times a second. The system is ninjaNIRS, an open-hardware instrument built in the lab, on a 3D-printed flexible cap. Drag the head to turn it.</p>
+    </div>
+    <div class="stage" id="cp-cap">
+      <div class="stage-head"><span class="tag">Your turn &middot; drag to rotate</span><span class="stage-note">The real layout: 56 sources, 144 detectors, 567 channels</span></div>
+      <div class="split">
+        <figure><canvas id="cp-cap-canvas" role="img" aria-label="A rotating 3D view of all optode positions on the head with lines for each measurement channel."></canvas>
+          <div class="legend"><span class="chip"><i class="dot" style="background:var(--hbo)"></i>light source</span><span class="chip"><i class="dot" style="background:var(--hbr)"></i>detector</span><span class="chip"><i style="background:var(--masker)"></i>channel</span></div></figure>
+        <figure><img class="photo" id="cp-cap-photo" alt="The whole-head fNIRS cap on a mannequin head: red-capped sources and blue-capped detectors cover the scalp." width="760" height="802">
+          <figcaption>The cap on a mannequin. Red caps are sources, blue caps are detectors.</figcaption></figure>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 5 -->
+  <div class="chapter band" id="cp-5"><div class="wrap">
+    <p class="step">Step 5</p>
+    <h2>From raw light to a brain signal</h2>
+    <div class="prose">
+      <p>What comes off a detector is not a brain signal yet. It is brightness over time, and the brain's contribution is the smallest thing in it. Your pulse is in there. So are slow drifts, jolts when the head moves, and blood flow in the scalp, which changes with breathing and blood pressure and has nothing to do with listening. Each step of the processing removes one of these. Switch them on one at a time.</p>
+    </div>
+    <div class="stage" id="cp-clean">
+      <div class="stage-head"><span class="tag">Your turn</span><span class="stage-note">A simulated channel, built to show what each step removes</span></div>
+      <div class="controls" role="group" aria-label="Processing steps">
+        <button class="btn" data-clean="motion" aria-pressed="false">1 Fix motion</button>
+        <button class="btn" data-clean="filter" aria-pressed="false">2 Filter out pulse and drift</button>
+        <button class="btn" data-clean="scalp" aria-pressed="false">3 Subtract the scalp</button>
+      </div>
+      <figure><canvas id="cp-clean-canvas" role="img" aria-label="A noisy trace that becomes a clear, repeating brain response as processing steps are switched on."></canvas>
+        <div class="legend"><span class="chip"><i style="background:var(--ink)"></i>the channel</span><span class="chip"><i style="background:var(--hbo)"></i>the brain response hidden in it</span><span class="chip"><i style="background:var(--cue);height:0.7rem;width:0.2rem"></i>trial starts</span></div></figure>
+      <p class="readout" id="cp-clean-out" aria-live="polite"></p>
+    </div>
+    <div class="prose">
+      <p>The real pipeline, in order: drop channels that are too dim or saturated; convert brightness to absorption; repair motion artifacts (a method called TDDR); band-pass filter between 0.01 and 0.5 Hz; convert the two colors into HbO and HbR; then fit a model of each trial's response while regressing out the average of the short channels, which carry the scalp signal. Each trial is measured relative to the two seconds before its cue.</p>
+    </div>
+  </div></div>
+
+  <!-- 6 -->
+  <div class="chapter band" id="cp-6"><div class="wrap">
+    <p class="step">Step 6</p>
+    <h2>Teaching a machine to read one trial</h2>
+    <div class="prose">
+      <p>Averaging 60 trials gives a clean picture, but a hearing device cannot wait for 60 trials. It has to decide from one. That is a machine learning problem: show a model many trials labeled "attending left" or "attending right," let it find what separates them, then test it on trials it has never seen.</p>
+      <p>You can do this yourself. Below are four labeled trials from two spots on the head, one over the left side and one over the right. Study them, then label the new ones.</p>
+    </div>
+    <div class="stage" id="cp-dec">
+      <div class="stage-head"><span class="tag">Your turn</span><span class="stage-note">Simulated single trials: the measured average response from the paper's control experiment (step 7), with noise added</span></div>
+      <p><strong>Training trials (labeled)</strong></p>
+      <div class="trials" id="cp-dec-train"></div>
+      <div class="legend"><span class="chip"><i style="background:var(--whole)"></i>spot over the left side of the head</span><span class="chip"><i style="background:var(--attR)"></i>spot over the right side</span><span class="chip"><i style="background:var(--cue);height:0.7rem;width:0.2rem"></i>cue</span></div>
+      <div class="split">
+        <figure><canvas id="cp-dec-test" role="img" aria-label="An unlabeled trial to classify."></canvas><figcaption id="cp-dec-cap">Test trial 1 of 8. Which side was this listener attending to?</figcaption></figure>
+        <div class="stack">
+          <div class="controls"><button class="btn primary" data-guess="L">Attending left</button><button class="btn primary" data-guess="R">Attending right</button></div>
+          <p class="readout" id="cp-dec-out" aria-live="polite">Your score will appear here.</p>
+        </div>
+      </div>
+    </div>
+    <div class="prose">
+      <p>The decoder in the paper does the same job with more to work with. For each listener it:</p>
+    </div>
+    <div class="cols-3">
+      <div><h3>Picks its channels</h3><p>From the usable channels (567 at most), it keeps the 20 whose signals differ most between left and right trials, measured by how far apart the two groups sit compared with how much each one spreads.</p></div>
+      <div><h3>Summarizes each second</h3><p>Those 20 channels are compressed into up to ten combined signals. For every one-second window, each signal is reduced to two numbers: how high it got and how steeply it was changing.</p></div>
+      <div><h3>Lets a forest vote</h3><p>A random forest of 300 small decision trees each looks at the numbers and votes left or right. The majority wins. Many weak, varied votes add up to a stable answer.</p></div>
+    </div>
+    <div class="prose">
+      <p><strong>Testing it honestly.</strong> A model that is graded on trials it trained on will always look good. So the trials are split into five parts: the model learns from four and is graded on the fifth, and this rotates until every trial has been a test trial. The whole thing is repeated ten times with different splits. Everything the model learns, including which 20 channels to keep, is learned from the training part alone.</p>
+      <p><strong>What counts as better than guessing?</strong> With two choices, guessing gets 50% in the long run. But a listener has at most 60 trials (38 to 60 once unusable ones are removed), and on that few a pure guesser can get lucky. Try it with 54.</p>
+    </div>
+    <div class="stage" id="cp-chance">
+      <div class="stage-head"><span class="tag">Your turn</span><span class="stage-note">Guessing left or right at random on 54 trials</span></div>
+      <div class="controls"><button class="btn primary" id="cp-chance-1">Guess once</button><button class="btn" id="cp-chance-1000">Guess 1,000 times</button></div>
+      <figure><canvas id="cp-chance-canvas" role="img" aria-label="Histogram of the accuracy a random guesser gets on 54 trials, centered on 50 percent and spreading from about 40 to 60 percent."></canvas></figure>
+      <p class="readout num" id="cp-chance-out" aria-live="polite">No guesses yet.</p>
+      <p class="stage-note">In the paper the same idea was run on one representative listener with 54 trials: the left and right labels were shuffled 1,000 times and the decoder retrained each time. Shuffled-label accuracy fell between 40.7% and 62.3% (5th to 95th percentile), so only accuracy above 62.3% is counted as above chance. That is the gray band in the charts below.</p>
+    </div>
+  </div></div>
+
+  <!-- 7 -->
+  <div class="chapter band" id="cp-7"><div class="wrap">
+    <p class="step">Step 7</p>
+    <h2>What it found</h2>
+    <div class="prose">
+      <p><strong>When listeners looked and listened, one trial was enough for most of them.</strong> Across 26 listeners the decoder's mean peak accuracy was 76.5%, and 21 of the 26 were above chance. Each dot below is one listener.</p>
+    </div>
+    <div class="stage">
+      <div class="stats">
+        <div class="stat"><span class="big" style="color:var(--whole)">76.5%</span><span>mean peak single-trial accuracy, look and listen</span></div>
+        <div class="stat"><span class="big" style="color:var(--attR)">55.9%</span><span>listen only, eyes fixed at center</span></div>
+        <div class="stat"><span class="big">2.4 s</span><span>mean time after the cue to reach near-peak accuracy</span></div>
+      </div>
+      <figure><canvas id="cp-acc-canvas" role="img" aria-label="Each listener's peak decoding accuracy in the look-and-listen task, mean 76.5 percent, and in the listen-only task, mean 55.9 percent, with the chance range of 40.7 to 62.3 percent shaded."></canvas>
+        <figcaption>Peak decoding accuracy for each of the 26 listeners in the two versions of the task. Lines join the same listener. The gray band is the chance range. Large markers are the means.</figcaption></figure>
+    </div>
+    <div class="prose">
+      <p>For one listener, here is how accuracy unfolds within a trial. It climbs within the first couple of seconds after the cue, holds while the talkers are on, and fades as the trial ends.</p>
+    </div>
+    <div class="stage">
+      <figure><canvas id="cp-curve-canvas" role="img" aria-label="Decoding accuracy over time for one example listener, rising above 90 percent about one to two seconds after the cue for both the whole-head decoder and the decoder restricted to the inferior parietal lobule."></canvas>
+        <div class="legend"><span class="chip"><i style="background:var(--whole)"></i>all channels</span><span class="chip"><i style="background:var(--ipl)"></i>IPL channels only (step 8)</span><span class="chip"><i style="background:var(--cue);height:0.7rem;width:0.2rem"></i>cue on</span><span class="chip"><i style="background:var(--movie);height:0.7rem;width:0.2rem"></i>talkers on</span><span class="chip"><i style="background:var(--muted);height:0.7rem;width:0.2rem"></i>talkers off</span></div>
+        <figcaption>The paper's example listener. Shading is the confidence interval across test folds.</figcaption></figure>
+    </div>
+    <div class="prose">
+      <p><strong>Where in the brain was it reading?</strong> Because the cap covers the whole head, the decoder's choices can be traced back to brain regions. Two stood out, one on each side: the left and right <strong>inferior parietal lobule</strong> (IPL), toward the back of the head above and behind the ear. They were the only regions the decoder used in every listener it worked for.</p>
+    </div>
+    <div class="stage">
+      <div class="bars" id="cp-roi"></div>
+      <p class="stage-note">Share of the decoder's information drawn from each region, averaged over the above-chance listeners in whom that region contributed. The two IPL regions (measured over the angular gyrus) are highlighted.</p>
+    </div>
+    <div class="prose">
+      <p><strong>Was the decoder reading attention or eye position?</strong> In the look-and-listen task, listeners did two things at once. They attended to one side and they looked at it. The first chart above already suggests which: with the same sounds but the eyes held at center, accuracy fell to 55.9%, inside the chance band.</p>
+      <p>To pin it down, eight listeners came back for a control experiment. At the cue they turned their eyes to one side, then held them there for 15 to 17 seconds before the talkers came on. If the IPL signal came from the eye <em>movement</em>, it should rise briefly and fade. Instead it persisted.</p>
+    </div>
+    <div class="stage">
+      <figure><canvas id="cp-owa-canvas" role="img" aria-label="Blood oxygen in the left and right inferior parietal lobule after the cue. In each hemisphere the signal rises when the eyes are held toward the opposite side and falls when held toward the same side, and the separation lasts the full 15 seconds."></canvas>
+        <div class="legend"><span class="chip"><i style="background:var(--whole)"></i>eyes held left</span><span class="chip"><i style="background:var(--attR)"></i>eyes held right</span><span class="chip"><i style="background:var(--cue);height:0.7rem;width:0.2rem"></i>cue</span></div>
+        <figcaption>Group mean HbO in the left and right IPL, eight listeners, shading is the standard error. The two directions separate at the cue and stay separated for the 15 seconds shown, all of it steady gaze before any talker comes on.</figcaption></figure>
+    </div>
+    <div class="prose">
+      <p>Each side of the brain responds when the eyes point to the <em>opposite</em> side, and keeps responding for as long as they stay there. So the IPL signal tracks <strong>where the eyes are pointing</strong>, not the act of moving them. And the listen-only task shows that listening alone was not enough. That is less of a limitation than it sounds. In real conversation people look at who they are listening to, so gaze direction is a strong, steady sign of where attention is, and it can be read from one compact region.</p>
+    </div>
+    <p class="plain"><b>In plain words</b>The cap can tell which side you are looking and listening toward from a single trial. The signal follows your gaze, and it comes from one small area on each side of the head.</p>
+  </div></div>
+
+  <!-- 8 -->
+  <div class="chapter band" id="cp-8"><div class="wrap">
+    <p class="step">Step 8</p>
+    <h2>The path to a smaller cap</h2>
+    <div class="prose">
+      <p>A cap with 200 optodes is a research instrument that nobody would wear in daily life. But if the signal that matters most sits over the IPL, most of the cap may not be needed. So the decoder was run again using only the channels over the left and right IPL: 58 of the 567, about a tenth of the cap.</p>
+    </div>
+    <div class="stage" id="cp-small">
+      <div class="stage-head"><span class="tag">Your turn</span>
+        <div class="controls" role="group" aria-label="Which channels the decoder may use">
+          <button class="btn" data-montage="all" aria-pressed="true">All 567 channels</button>
+          <button class="btn" data-montage="ipl" aria-pressed="false">IPL only (58)</button>
+        </div>
+      </div>
+      <div class="split">
+        <figure><canvas id="cp-small-cap" role="img" aria-label="The cap layout with the channels over the left and right inferior parietal lobule highlighted."></canvas></figure>
+        <figure><canvas id="cp-small-acc" role="img" aria-label="Each listener's accuracy with all channels, mean 76.5 percent, and with IPL channels only, mean 74.4 percent."></canvas>
+          <figcaption id="cp-small-cap-text"></figcaption></figure>
+      </div>
+    </div>
+    <div class="prose">
+      <p>On average accuracy barely moved: 76.5% with everything, 74.4% with the IPL alone, a difference that is not statistically significant (paired t-test, p = 0.29), though three fewer listeners cleared chance. A tenth of the cap was enough for comparable decoding.</p>
+      <p>That points to a different kind of device: a compact patch of optodes over the IPL on each side instead of a full cap, reading which side the wearer is oriented toward and passing that to a hearing device that favors sound from there.</p>
+    </div>
+    <figure>
+      <div class="scroll-x">
+      <svg class="fig" viewBox="0 0 720 150" style="min-width:560px" role="img" aria-label="Concept: a compact patch of optodes over the parietal lobe reads the attended side, and that steers a hearing device toward that side.">
+        <defs><marker id="cp-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        <g fill="var(--surface)" stroke="var(--rule)" stroke-width="1.5"><rect x="10" y="35" width="190" height="80" rx="8"/><rect x="265" y="35" width="190" height="80" rx="8"/><rect x="520" y="35" width="190" height="80" rx="8"/></g>
+        <g><circle cx="48" cy="62" r="7" fill="var(--hbo)"/><circle cx="68" cy="62" r="7" fill="var(--hbr)"/><circle cx="58" cy="80" r="7" fill="var(--hbr)"/></g>
+        <text x="86" y="66" font-size="14" font-weight="600">A compact patch</text><text x="86" y="85" font-size="12" style="fill:var(--muted)">optodes over the IPL</text>
+        <text x="360" y="70" text-anchor="middle" font-size="14" font-weight="600">Decoder</text><text x="360" y="90" text-anchor="middle" font-size="12" style="fill:var(--muted)">left or right?</text>
+        <text x="615" y="70" text-anchor="middle" font-size="14" font-weight="600">Hearing device</text><text x="615" y="90" text-anchor="middle" font-size="12" style="fill:var(--muted)">favors that side</text>
+        <g stroke="currentColor" stroke-width="1.4" marker-end="url(#cp-arr)"><line x1="202" y1="75" x2="262" y2="75"/><line x1="457" y1="75" x2="517" y2="75"/></g>
+        <text x="232" y="64" text-anchor="middle" font-size="11" style="fill:var(--muted)">HbO</text><text x="487" y="64" text-anchor="middle" font-size="11" style="fill:var(--muted)">side</text>
+      </svg>
+      </div>
+      <figcaption>The idea the result points to. No such device has been built.</figcaption>
+    </figure>
+    <div class="prose">
+      <h3>What this does not show yet</h3>
+    </div>
+    <ul class="limits">
+      <li>Listeners sat still with their chin on a rest. Real use means head movement, which fNIRS has to be made robust to.</li>
+      <li>Attention and gaze moved together in the task that decoded well. With the eyes fixed, decoding was near chance, so this is not yet a read-out of attention when someone listens to one side while looking elsewhere.</li>
+      <li>The choice was only left or right, announced by a cue, in separate trials with rest in between. Continuous listening needs a different way to set the baseline.</li>
+      <li>Each listener's decoder was trained on that listener's own data.</li>
+      <li>The IPL-only result was computed from the full cap's data. A compact device has not been built or tested.</li>
+    </ul>
+    <p class="notice">Duwadi S, Rogers D, Boyd AD, Carlton LB, Zhang Y, Gaona AK, Pathiyaparambath AD, Chaudhury R, Magee G, Zimmermann BB, O'Brien WJ, von L&uuml;hmann A, Boas DA, Y&uuml;cel MA, Sen K (2026). Decoding spatial attention in the cocktail party problem using whole-head high-density fNIRS. NeuroImage 342, 122292. <a href="https://doi.org/10.1016/j.neuroimage.2026.122292">doi.org/10.1016/j.neuroimage.2026.122292</a>. Supported by the National Science Foundation (award 2319321).</p>
+  </div></div>
+</section>

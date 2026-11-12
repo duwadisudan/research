@@ -1,0 +1,6 @@
+tools/
+dist/
+public/
+NOTES.md
+src/data/effort_audio.js
+__pycache__/

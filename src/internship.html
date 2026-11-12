@@ -1,0 +1,120 @@
+<section class="view" data-view="internship" hidden>
+  <div class="hero band">
+    <canvas class="hero-fx" data-scene="contour" aria-hidden="true"></canvas>
+    <div class="wrap stack">
+    <p class="eyebrow">Project 3 &middot; internship, summer 2026</p>
+    <h1>Can a machine hear empathy?</h1>
+    <p class="lede">A transcript records the words but not how they were spoken. At NBME I led a research project on whether the sound of a medical student's voice carries what human listeners judge as empathy, and whether audio AI models judge it the way people do.</p>
+    <dl class="facts">
+      <div><dt>Role</dt><dd>Measurement and Data Science Intern, Office of Research Strategy, National Board of Medical Examiners (NBME)</dd></div>
+      <div><dt>Team</dt><dd>Two NLP scientists on the research side, and an eight-person rating team that I directed</dd></div>
+      <div><dt>Outcome</dt><dd>Presented company-wide and to stakeholders; first-author manuscript submitted to ICASSP 2027</dd></div>
+      <div><dt>On this page</dt><dd>The problem and the approach. The paper is submitted and not yet published, so results are not shown here.</dd></div>
+    </dl>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>Same words, different message</h2>
+    <div class="prose">
+      <p>Imagine a patient has just shared bad news, and the clinician answers with one sentence. Below, that sentence is "spoken" by a synthesizer that hums instead of pronouncing words, so all you hear is the delivery: pitch, loudness, pace, and pauses. Play both deliveries and decide which one sounds like it cares.</p>
+    </div>
+    <div class="stage" id="in-voice">
+      <div class="stage-head"><span class="tag">Your turn &middot; sound on</span><span class="stage-note">A synthesized illustration. No recordings from the assessment are used, and the four controls are examples, not the study's findings.</span></div>
+      <div class="controls" role="group" aria-label="Delivery">
+        <button class="btn" data-preset="a">Play delivery A</button>
+        <button class="btn" data-preset="b">Play delivery B</button>
+        <button class="btn quiet" id="in-replay">Play my settings</button>
+      </div>
+      <figure>
+        <canvas id="in-canvas" aria-label="Pitch of the hummed sentence over time, with line thickness showing loudness and the words placed where they fall." role="img"></canvas>
+        <figcaption>Height is pitch, thickness is loudness, gaps are pauses. The words underneath never change.</figcaption>
+      </figure>
+      <div class="split">
+        <label class="field" for="in-pace">Pace <input type="range" id="in-pace" min="0" max="100" value="35"></label>
+        <label class="field" for="in-pitch">Pitch movement <input type="range" id="in-pitch" min="0" max="100" value="75"></label>
+        <label class="field" for="in-loud">Loudness movement <input type="range" id="in-loud" min="0" max="100" value="60"></label>
+        <label class="field" for="in-pause">Pause between sentences <input type="range" id="in-pause" min="0" max="100" value="70"></label>
+      </div>
+      <p class="readout">Transcript, at every setting of every slider:<br>"I'm sorry to hear that. That sounds really difficult."</p>
+    </div>
+    <p class="plain"><b>In plain words</b>You just compared two deliveries of one sentence. Anything that reads only the transcript has to give them the same score.</p>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>Where this matters</h2>
+    <div class="prose">
+      <p>NBME co-sponsors the exams used to license medical doctors in the United States. One of its newer tools, the <a href="https://www.nbme.org/cla/">Communication Learning Assessment</a>, helps medical students practice patient-centered communication: the learner watches a recorded vignette of a simulated patient and records a spoken reply.</p>
+      <p>Scoring speech at scale usually starts by converting it to text, because text is what language models read best. For communication skills that first step loses information. Part of empathy may be in the delivery, and transcription removes the delivery.</p>
+      <p>So the project asked two things. Do measurable properties of the voice relate to how empathic human listeners judge a response to be? And when an audio AI model is asked to make the same judgment, does it agree with people?</p>
+    </div>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>How we went after it</h2>
+    <div class="prose">
+      <p>The study makes one comparison: each spoken response gets a human judgment, and each automated route is measured by how closely it matches that judgment.</p>
+    </div>
+    <figure>
+      <div class="scroll-x">
+      <svg class="fig" viewBox="0 0 760 254" style="min-width:600px" role="img" aria-label="A spoken response goes to human raters and to two automated routes: measured voice features with classic machine learning, and audio language models. Each automated route is compared with the human ratings.">
+        <defs><marker id="in-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+        <g fill="var(--surface)" stroke="var(--rule)" stroke-width="1.5">
+          <rect x="10" y="130" width="130" height="70" rx="8"/>
+          <rect x="230" y="14" width="250" height="62" rx="8" stroke="var(--act)"/>
+          <rect x="230" y="96" width="250" height="62" rx="8"/><rect x="230" y="178" width="250" height="62" rx="8"/>
+          <rect x="590" y="150" width="160" height="80" rx="8"/>
+        </g>
+        <text x="75" y="160" text-anchor="middle" font-size="14" font-weight="600">Spoken</text><text x="75" y="179" text-anchor="middle" font-size="14" font-weight="600">response</text>
+        <text x="355" y="40" text-anchor="middle" font-size="14" font-weight="600">Human raters</text><text x="355" y="60" text-anchor="middle" font-size="12" style="fill:var(--muted)">ratings and reasons; some rated twice</text>
+        <text x="355" y="122" text-anchor="middle" font-size="14" font-weight="600">Voice features + classic ML</text><text x="355" y="142" text-anchor="middle" font-size="12" style="fill:var(--muted)">numbers such as pitch, loudness, and timing</text>
+        <text x="355" y="204" text-anchor="middle" font-size="14" font-weight="600">Audio language models</text><text x="355" y="224" text-anchor="middle" font-size="12" style="fill:var(--muted)">hear the audio, give a rating and a reason</text>
+        <text x="670" y="184" text-anchor="middle" font-size="14" font-weight="600">Agreement</text><text x="670" y="204" text-anchor="middle" font-size="12" style="fill:var(--muted)">with the humans</text>
+        <g stroke="currentColor" stroke-width="1.3" fill="none" marker-end="url(#in-arr)">
+          <path d="M140 152 C185 152 185 45 228 45"/><path d="M140 165 C185 165 185 127 228 127"/><path d="M140 178 C185 178 185 209 228 209"/>
+          <path d="M480 127 C535 127 535 180 588 180"/><path d="M480 209 C535 209 535 200 588 200"/>
+        </g>
+        <path d="M480 45 C560 45 670 60 670 148" stroke="var(--act)" stroke-width="1.6" fill="none" marker-end="url(#in-arr)"/>
+        <text x="640" y="72" font-size="12" style="fill:var(--act)">the reference</text>
+      </svg>
+      </div>
+      <figcaption>The design of the study. The human ratings are the reference; every other box is scored by how well it agrees with them.</figcaption>
+    </figure>
+    <div class="cols-3">
+      <div><h3>People first</h3><p>Empathy is a judgment, and two listeners can hear the same reply differently. I directed the eight-person rating team and was one of its raters. Part of the data was rated twice, which shows how much humans agree among themselves. That agreement is the reference for the models.</p></div>
+      <div><h3>Measure the voice</h3><p>I built Python pipelines that turn each recording into acoustic and paralinguistic features, then trained classification and regression models to predict the human ratings from those numbers alone. This route is transparent: you can see which properties of the voice a model leans on.</p></div>
+      <div><h3>Ask the models</h3><p>I benchmarked open-source audio language models (Qwen) against a closed-source one (GPT-4o Audio), with prompts that gave the model either no examples (zero-shot) or a few human-rated examples (few-shot), using the audio and the transcript. I also fine-tuned a text-based language model on the conversation transcripts.</p></div>
+    </div>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>What "agreeing with humans" means</h2>
+    <div class="prose">
+      <p>The whole study rests on measuring agreement, and two raters can agree in more than one sense. Rater A's scores for eight made-up clips are fixed below. Set rater B's scores and watch two standard measures respond.</p>
+    </div>
+    <div class="stage" id="in-agree">
+      <div class="stage-head"><span class="tag">Your turn</span>
+        <div class="controls" role="group" aria-label="Presets">
+          <button class="btn" data-ag="same">Identical</button>
+          <button class="btn" data-ag="shift">B is one point harsher</button>
+          <button class="btn" data-ag="scramble">B disagrees on order</button>
+        </div>
+      </div>
+      <div class="split">
+        <div class="scroll-x"><table id="in-agree-table" style="border-collapse:separate;border-spacing:0.25rem;font-size:0.92rem"></table></div>
+        <div class="stack">
+          <p class="readout num" id="in-agree-out" aria-live="polite"></p>
+          <p class="stage-note"><strong>Weighted kappa</strong> asks whether the two give the same scores, beyond what chance would produce, and forgives a near miss more than a far one. 1 is perfect, 0 is chance.<br><strong>Spearman correlation</strong> asks only whether they put the clips in the same order.</p>
+        </div>
+      </div>
+      <p class="stage-note">Made-up numbers for illustration. Try the middle preset: a rater who is consistently harsher keeps the order, so the correlation stays high while kappa drops. That is why the study uses both.</p>
+    </div>
+  </div></div>
+
+  <div class="chapter band"><div class="wrap">
+    <h2>How the work ran</h2>
+    <div class="prose">
+      <p>I did the work in Python on AWS, with peer code review and Agile planning in Jira, compared the explanations the models wrote as well as their scores, and presented the work to the company and to stakeholders. The manuscript, with me as first author, is submitted to ICASSP 2027.</p>
+      <p>This is close to my PhD work. In the lab I study what the brain and body show about listening that a word score misses. Here the question was what a voice might carry that a transcript misses.</p>
+    </div>
+  </div></div>
+</section>
